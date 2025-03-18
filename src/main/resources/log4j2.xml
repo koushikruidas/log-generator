@@ -4,14 +4,14 @@
         <!-- Kafka & Log Analyzer Properties -->
         <Property name="bootstrap.servers">localhost:9092</Property>
         <Property name="log.analyzer.api.url">http://localhost:8080/api/admin/application/details</Property>
-        <Property name="application.name">test</Property>
-        <Property name="organization.name">Koushik</Property>
-        <Property name="default.kafka.topic">logs.cics</Property>
-        <Property name="apiKey">5e1e44fd-6adc-45e5-a66b-1779eca7f6a9</Property>
+        <Property name="application.name">myFavApp</Property>
+        <Property name="organization.name">poincian</Property>
+        <Property name="kafka.topic">logs.cics</Property>
+        <Property name="apiKey">b5e1c456-33f5-4389-af68-7d41e648d805</Property>
     </Properties>
 
     <Appenders>
-        <Kafka name="Kafka" topic="${default.kafka.topic}">
+        <Kafka name="Kafka" topic="${kafka.topic}">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"/>
             <Property name="bootstrap.servers">${bootstrap.servers}</Property>
         </Kafka>
