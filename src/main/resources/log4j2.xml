@@ -2,18 +2,39 @@
 <Configuration status="info" name="spring-boot-kafka-log" packages="com.reloadly">
     <Properties>
         <!-- Kafka & Log Analyzer Properties -->
-        <Property name="bootstrap.servers">localhost:9092</Property>
-        <Property name="log.analyzer.api.url">http://localhost:8080/api/admin/application/details</Property>
-        <Property name="application.name">myFavApp</Property>
-        <Property name="organization.name">poincian</Property>
-        <Property name="kafka.topic">logs.cics</Property>
-        <Property name="apiKey">b5e1c456-33f5-4389-af68-7d41e648d805</Property>
+        <Property name="bootstrap.servers">kafka:9095</Property>
+        <!-- SASL Configuration -->
+        <Property name="security.protocol">SASL_SSL</Property> <!-- Or SASL_SSL -->
+        <Property name="sasl.mechanism">SCRAM-SHA-512</Property>
+        <Property name="sasl.jaas.config">
+            org.apache.kafka.common.security.scram.ScramLoginModule required
+            username="${env:KAFKA_USERNAME}"
+            password="${env:KAFKA_PASSWORD}";
+        </Property>
+
+        <!-- If mutual TLS is enabled (client certs), also add: -->
+        <Property name="ssl.keystore.location">${env:SSL_KEYSTORE_PATH}</Property>
+        <Property name="ssl.keystore.password">${env:SSL_KEYSTORE_PASSWORD}</Property>
+        <Property name="ssl.key.password">${env:SSL_KEY_PASSWORD}</Property>
+
+        <Property name="log.analyzer.api.url">http://localhost:5002/api/admin/application/details</Property>
+        <Property name="application.name">ingestion</Property>
+        <Property name="organization.name">log</Property>
+        <Property name="kafka.topic">log_ingestion</Property>
+        <Property name="apiKey">445f4e16-f7a7-4c92-84a2-29b289ac5d89</Property>
     </Properties>
 
     <Appenders>
         <Kafka name="Kafka" topic="${kafka.topic}">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"/>
             <Property name="bootstrap.servers">${bootstrap.servers}</Property>
+            <Property name="security.protocol">${security.protocol}</Property>
+            <Property name="sasl.mechanism">${sasl.mechanism}</Property>
+            <Property name="sasl.jaas.config">${sasl.jaas.config}</Property>
+
+            <Property name="ssl.keystore.location">${ssl.keystore.location}</Property>
+            <Property name="ssl.keystore.password">${ssl.keystore.password}</Property>
+            <Property name="ssl.key.password">${ssl.key.password}</Property>
         </Kafka>
         <Async name="Async">
             <AppenderRef ref="Kafka"/>
