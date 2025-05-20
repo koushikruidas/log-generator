@@ -18,10 +18,10 @@
         <Property name="ssl.key.password">${env:SSL_KEY_PASSWORD}</Property>
 
         <Property name="log.analyzer.api.url">http://localhost:5002/api/admin/application/details</Property>
-        <Property name="application.name">ingestion</Property>
-        <Property name="organization.name">log</Property>
-        <Property name="kafka.topic">log_ingestion</Property>
-        <Property name="apiKey">445f4e16-f7a7-4c92-84a2-29b289ac5d89</Property>
+        <Property name="application.name">${env:APPLICATION_NAME}</Property>
+        <Property name="organization.name">${env:ORGANIZATION_NAME}</Property>
+        <Property name="kafka.topic">${env:KAFKA_TOPIC}</Property>
+        <Property name="apiKey">${env:LOG_ANALYZER_TOKEN}</Property>
     </Properties>
 
     <Appenders>
