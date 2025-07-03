@@ -17,7 +17,7 @@
         <Property name="ssl.keystore.password">${env:SSL_KEYSTORE_PASSWORD}</Property>
         <Property name="ssl.key.password">${env:SSL_KEY_PASSWORD}</Property>
 
-        <Property name="log.analyzer.api.url">http://localhost:5002/api/admin/application/details</Property>
+        <Property name="log.analyzer.admin.api.url">${env:LOGANALYZER_ADMIN_URL}/api/admin/application/details</Property>
         <Property name="application.name">${env:APPLICATION_NAME}</Property>
         <Property name="organization.name">${env:ORGANIZATION_NAME}</Property>
         <Property name="kafka.topic">${env:KAFKA_TOPIC}</Property>
