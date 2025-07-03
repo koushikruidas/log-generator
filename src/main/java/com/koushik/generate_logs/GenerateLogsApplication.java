@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.poinciana.log_analyzer_client"})
+@ComponentScan(basePackages = {"com.poinciana.loganalyzerClient"})
 public class GenerateLogsApplication {
 
 	public static void main(String[] args) throws InterruptedException {
