@@ -2,7 +2,7 @@
 <Configuration status="info" name="spring-boot-kafka-log" packages="com.reloadly">
     <Properties>
         <!-- Kafka & Log Analyzer Properties -->
-        <Property name="bootstrap.servers">kafka:9095</Property>
+        <Property name="bootstrap.servers">${env:KAFKA_SERVERS}</Property>
         <!-- SASL Configuration -->
         <Property name="security.protocol">SASL_SSL</Property> <!-- Or SASL_SSL -->
         <Property name="sasl.mechanism">SCRAM-SHA-512</Property>
