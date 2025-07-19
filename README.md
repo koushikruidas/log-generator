@@ -35,6 +35,26 @@ Make sure your `pom.xml` also includes the GitHub repository for the dependency:
 </repositories>
 ```
 
+#### Maven Authentication (settings.xml)
+To provide your GitHub username and personal access token for the repository, update your Maven `settings.xml` (usually located in `~/.m2/settings.xml`) as follows:
+
+```xml
+<settings>
+  <!-- ...existing settings... -->
+  <servers>
+    <server>
+      <id>github</id>
+      <username>YOUR_GITHUB_USERNAME</username>
+      <password>YOUR_GITHUB_PERSONAL_ACCESS_TOKEN</password>
+    </server>
+    <!-- ...other servers... -->
+  </servers>
+  <!-- ...existing settings... -->
+</settings>
+```
+
+Replace `YOUR_GITHUB_USERNAME` and `YOUR_GITHUB_PERSONAL_ACCESS_TOKEN` with your actual GitHub credentials.
+
 ### Gradle
 Add the following to your `build.gradle`:
 
