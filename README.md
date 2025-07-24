@@ -9,7 +9,31 @@ This guide explains how to configure your Spring Boot application to send logs t
 
 ## 1. Add the Log Analyzer Client Dependency
 
-### Maven
+### Recommended: Use Maven Central
+The `log-analyzer-client` artifact is available on Maven Central for general use. Add the following dependency to your `pom.xml`:
+
+```xml
+<dependency>
+    <groupId>io.github.koushikruidas</groupId>
+    <artifactId>log-analyzer-client</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
+For Gradle, add the following to your `build.gradle`:
+
+```groovy
+dependencies {
+    implementation 'io.github.koushikruidas:log-analyzer-client:1.0.0'
+}
+```
+
+No additional repository configuration is required when using Maven Central.
+
+### Advanced: Using GitHub Packages (Private Repository)
+If you need to use a snapshot or a version not yet available on Maven Central, you can reference the GitHub Packages repository. This is generally only needed for advanced or development scenarios.
+
+#### Maven
 Add the following dependency to your `pom.xml`:
 
 ```xml
@@ -20,7 +44,7 @@ Add the following dependency to your `pom.xml`:
 </dependency>
 ```
 
-Make sure your `pom.xml` also includes the GitHub repository for the dependency:
+And include the GitHub repository:
 
 ```xml
 <repositories>
@@ -35,8 +59,8 @@ Make sure your `pom.xml` also includes the GitHub repository for the dependency:
 </repositories>
 ```
 
-#### Maven Authentication (settings.xml)
-To provide your GitHub username and personal access token for the repository, update your Maven `settings.xml` (usually located in `~/.m2/settings.xml`) as follows:
+##### Maven Authentication (settings.xml)
+To authenticate with GitHub Packages, update your Maven `settings.xml` (usually located in `~/.m2/settings.xml`) as follows:
 
 ```xml
 <settings>
@@ -55,7 +79,7 @@ To provide your GitHub username and personal access token for the repository, up
 
 Replace `YOUR_GITHUB_USERNAME` and `YOUR_GITHUB_PERSONAL_ACCESS_TOKEN` with your actual GitHub credentials.
 
-### Gradle
+#### Gradle
 Add the following to your `build.gradle`:
 
 ```groovy
@@ -73,6 +97,8 @@ repositories {
     }
 }
 ```
+
+---
 
 ## 2. Configure Log4j2
 
