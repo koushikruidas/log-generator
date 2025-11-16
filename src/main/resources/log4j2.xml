@@ -36,20 +36,102 @@
             <Property name="ssl.keystore.password">${ssl.keystore.password}</Property>
             <Property name="ssl.key.password">${ssl.key.password}</Property>
         </Kafka>
+
+        <!--  This is the simplest and most reliable JSON output.
+              It automatically includes instant, epochMillis,
+              thread, logger, level, message, exceptions, etc.
+        -->
+        <Kafka name="Kafka-json" topic="${kafka.topic}">
+            <JsonLayout
+                    complete="false"
+                    compact="true"
+                    eventEol="true"
+                    properties="true"
+                    stacktraceAsString="true"
+                    includeTimeMillis="true"
+            />
+            <Property name="bootstrap.servers">${bootstrap.servers}</Property>
+            <Property name="security.protocol">${security.protocol}</Property>
+            <Property name="sasl.mechanism">${sasl.mechanism}</Property>
+            <Property name="sasl.jaas.config">${sasl.jaas.config}</Property>
+
+            <Property name="ssl.keystore.location">${ssl.keystore.location}</Property>
+            <Property name="ssl.keystore.password">${ssl.keystore.password}</Property>
+            <Property name="ssl.key.password">${ssl.key.password}</Property>
+        </Kafka>
+
+        <!--TOTAL CONTROL over field names , the parser is not working and not able to parse-->
+         <Kafka name="Kafka-pattern" topic="${kafka.topic}">
+             <PatternLayout pattern='{
+                "timestamp": "%d{yyyy-MM-dd&apos;T&apos;HH:mm:ss.SSSXXX}",
+                "epochMillis": %d{UNIX_MILLIS},
+                "level": "%p",
+                "logger": "%c",
+                "thread": "%t",
+                "message": %enc{%m}{JSON},
+                "application": "${application.name}",
+                "organization": "${organization.name}"
+            }%n'/>
+             <Property name="bootstrap.servers">${bootstrap.servers}</Property>
+             <Property name="security.protocol">${security.protocol}</Property>
+             <Property name="sasl.mechanism">${sasl.mechanism}</Property>
+             <Property name="sasl.jaas.config">${sasl.jaas.config}</Property>
+
+             <Property name="ssl.keystore.location">${ssl.keystore.location}</Property>
+             <Property name="ssl.keystore.password">${ssl.keystore.password}</Property>
+             <Property name="ssl.key.password">${ssl.key.password}</Property>
+         </Kafka>
+
         <Async name="Async">
             <AppenderRef ref="Kafka"/>
         </Async>
 
         <Console name="stdout" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"/>
+            <!-- with offset value -->
+<!--            <PatternLayout pattern="%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX} [%thread] %-5level %logger{36} - %msg%n"/>-->
+            <!-- with offset value and epoch time-->
+<!--            <PatternLayout pattern="%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX} [%thread] %-5level %logger{36} - %msg%nepoch=%d{UNIX_MILLIS}"/>-->
         </Console>
+
+        <Console name="stdout-json" target="SYSTEM_OUT">
+            <JsonLayout
+                    complete="false"
+                    compact="false"
+                    eventEol="true"
+                    properties="true"
+                    stacktraceAsString="true"
+                    includeTimeMillis="true"
+            />
+        </Console>
+
+        <Console name="stdout-pattern" target="SYSTEM_OUT">
+            <PatternLayout pattern='{
+                "timestamp": "%d{yyyy-MM-dd&apos;T&apos;HH:mm:ss.SSSXXX}",
+                "epochMillis": %d{UNIX_MILLIS},
+                "level": "%p",
+                "logger": "%c",
+                "thread": "%t",
+                "message": %enc{%m}{JSON},
+                "application": "${application.name}",
+                "organization": "${organization.name}"
+            }%n'/>
+        </Console>
+
 
     </Appenders>
     <Loggers>
         <Root level="INFO">
-            <AppenderRef ref="Kafka"/>
+<!--            <AppenderRef ref="Kafka"/>-->
+            <AppenderRef ref="Kafka-json"/>
+<!--            <AppenderRef ref="Kafka-pattern"/>-->
             <AppenderRef ref="stdout"/>
+
+            <!-- Add these three for preview -->
+<!--                        <AppenderRef ref="stdout-kafka"/>-->
+<!--                        <AppenderRef ref="stdout-json"/>-->
+<!--                        <AppenderRef ref="stdout-pattern"/>-->
         </Root>
-        <Logger name="org.apache.kafka" level="WARN" /><!-- avoid recursive logging -->
+        <Logger name="org.apache.kafka" level="WARN"/><!-- avoid recursive logging -->
     </Loggers>
 </Configuration>
