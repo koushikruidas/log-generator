@@ -60,28 +60,6 @@
             <Property name="ssl.key.password">${ssl.key.password}</Property>
         </Kafka>
 
-        <!--TOTAL CONTROL over field names , the parser is not working and not able to parse-->
-         <Kafka name="Kafka-pattern" topic="${kafka.topic}">
-             <PatternLayout pattern='{
-                "timestamp": "%d{yyyy-MM-dd&apos;T&apos;HH:mm:ss.SSSXXX}",
-                "epochMillis": %d{UNIX_MILLIS},
-                "level": "%p",
-                "logger": "%c",
-                "thread": "%t",
-                "message": %enc{%m}{JSON},
-                "application": "${application.name}",
-                "organization": "${organization.name}"
-            }%n'/>
-             <Property name="bootstrap.servers">${bootstrap.servers}</Property>
-             <Property name="security.protocol">${security.protocol}</Property>
-             <Property name="sasl.mechanism">${sasl.mechanism}</Property>
-             <Property name="sasl.jaas.config">${sasl.jaas.config}</Property>
-
-             <Property name="ssl.keystore.location">${ssl.keystore.location}</Property>
-             <Property name="ssl.keystore.password">${ssl.keystore.password}</Property>
-             <Property name="ssl.key.password">${ssl.key.password}</Property>
-         </Kafka>
-
         <Async name="Async">
             <AppenderRef ref="Kafka"/>
         </Async>
@@ -103,19 +81,6 @@
                     stacktraceAsString="true"
                     includeTimeMillis="true"
             />
-        </Console>
-
-        <Console name="stdout-pattern" target="SYSTEM_OUT">
-            <PatternLayout pattern='{
-                "timestamp": "%d{yyyy-MM-dd&apos;T&apos;HH:mm:ss.SSSXXX}",
-                "epochMillis": %d{UNIX_MILLIS},
-                "level": "%p",
-                "logger": "%c",
-                "thread": "%t",
-                "message": %enc{%m}{JSON},
-                "application": "${application.name}",
-                "organization": "${organization.name}"
-            }%n'/>
         </Console>
 
 
